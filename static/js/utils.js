@@ -1,13 +1,14 @@
-console.log("window.location.href: " + window.location.href);
-console.log("window.location.pathname: " + window.location.pathname);
-
 var queryString = window.location.search;
 var urlParams = new URLSearchParams(queryString);
 var demoId=1;
+
 if ( urlParams.get('id')) {
     demoId=urlParams.get('id');
 }
-console.log("Demo ID: " + demoId);
+
+//console.log("window.location.href: " + window.location.href);
+//console.log("window.location.pathname: " + window.location.pathname);
+//console.log("Demo ID: " + demoId);
 
 window.onload = function() {
     var anchors = document.getElementsByTagName("a");

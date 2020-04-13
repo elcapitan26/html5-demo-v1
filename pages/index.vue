@@ -38,6 +38,25 @@ export default {
     Follow,
     Links,
     Footer
+  },
+  async asyncData ({ req, res }) {
+    var host="none";
+    var ip="none";
+    // Please check if you are on the server side before
+    // using req and res
+    if (process.server) {
+      console.log("Process is server: " + true);
+      host=(req.headers.host);
+      ip=(req.headers.remoteAddress);
+      console.log("Host: " + host);
+      console.log("IP: " + ip);
+      return { host: req.headers.host }
+    }
+    console.log("Process is server: " + true);
+    console.log("Host: " + host);
+    console.log("IP: " + ip);
+
+    return {}
   }
 }
 </script>
