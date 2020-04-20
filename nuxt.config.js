@@ -24,6 +24,7 @@ export default {
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
+  //env: { serverIp: "hello"},
   /*
   ** Global CSS
   */

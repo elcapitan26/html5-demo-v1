@@ -10,13 +10,13 @@
   <Follow />
   <Links />
   <Footer />
+  <span class="info">IP: {{ ipAddr }}</span>
   </div>
 </div>
-
-
 </template>
 
 <script>
+import axios from 'axios';
 import Nav from "~/components/Nav";
 import Showcase1 from "~/components/Showcase1";
 import Cards1 from "~/components/Cards1";
@@ -28,7 +28,7 @@ import Links from "~/components/Links";
 import Footer from "~/components/Footer";
 
 export default {
-  components: {
+   components: {
     Nav,
     Showcase1,
     Cards1,
@@ -39,29 +39,19 @@ export default {
     Links,
     Footer
   },
-  async asyncData ({ req, res }) {
-    var host="none";
-    var ip="none";
-    // Please check if you are on the server side before
-    // using req and res
-    if (process.server) {
-      console.log("Process is server: " + true);
-      host=(req.headers.host);
-      ip=(req.headers.remoteAddress);
-      console.log("Host: " + host);
-      console.log("IP: " + ip);
-      return { host: req.headers.host }
-    }
-    console.log("Process is server: " + true);
-    console.log("Host: " + host);
-    console.log("IP: " + ip);
-
-    return {}
+  //middleware: 'serverInfo',
+  async asyncData({params, error}) {
+      try {
+      const { data } = await axios.get(`https://icanhazip.com`, {timeout: 2000})
+      return { ipAddr: data }
+      } catch (err) {
+        return {ipAddr : "0"}
+      }
   }
 }
 </script>
 
-<style>
+<style> 
     * {
         box-sizing: border-box;
         margin: 0;
@@ -74,6 +64,11 @@ export default {
         color: #000;
         font-size: 15px;
         line-height: 1.5;
+      }
+      
+      .info {
+        font-size: 12px;
+        padding: 10px;
       }
       
       a {

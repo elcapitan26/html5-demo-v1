@@ -1,6 +1,6 @@
 <template>
-  <!-- Nav -->
-    <nav class="main-nav">
+  <!-- Nav --> 
+   <nav class="main-nav">
       <img src="~static/img/1/logo.png" alt="Microsoft" class="logo">
 
       <ul class="main-menu">
@@ -31,6 +31,7 @@
 export default {
 
 }
+
 </script>
 
 <style>
