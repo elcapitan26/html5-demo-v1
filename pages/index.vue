@@ -10,7 +10,7 @@
   <Follow />
   <Links />
   <Footer />
-  <span class="info">IP: {{ ipAddr }}</span>
+  <span class="info">Server IP: {{ serverIpAddr }}  |  Local IP: {{ localIpAddr }}  |  UserAgent: {{ userAgent }} </span>
   </div>
 </div>
 </template>
@@ -40,14 +40,33 @@ export default {
     Footer
   },
   //middleware: 'serverInfo',
-  async asyncData({params, error}) {
+  async asyncData (context) {
+    let serverIp;
+    let localIp;
+    let browserUA;
+    if (process.server) {
       try {
-      const { data } = await axios.get(`https://icanhazip.com`, {timeout: 2000})
-      return { ipAddr: data }
-      } catch (err) {
-        return {ipAddr : "0"}
+        const req = context.req;
+        const headers = (req && req.headers) ? Object.assign({}, req.headers) : {};
+        let xForwardedFor = headers['x-forwarded-for'];
+        let xRealIp = headers['x-real-ip'];
+        let xUserAgent = headers['User-Agent'];
+        localIp = xRealIp || "Not found";
+        browserUA = xUserAgent || "Not found";
+      }catch (err) {
+        console.log ("Could not determine local IP: " + err);
       }
-  }
+    }
+    try {
+      const response = await axios.get('https://icanhazip.com', {timeout: 2000});
+      serverIp = response.data || "Not found";
+      //console.log(response);
+    } catch (err) {
+        console.log ("Could not determine server IP: " + err);
+    }
+        
+    return { serverIpAddr: serverIp, localIpAddr: localIp, userAgent: browserUA }
+  } 
 }
 </script>
 
