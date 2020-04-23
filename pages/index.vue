@@ -1,5 +1,8 @@
 <template>
 <div>
+  <div class="menu-btn">
+    <i class="fas fa-bars fa-2x"></i>
+  </div>
   <div class="container">
   <Nav />
   <Showcase1 />
@@ -10,7 +13,7 @@
   <Follow />
   <Links />
   <Footer />
-  <span class="info">Server IP: {{ serverIpAddr }}  |  Local IP: {{ localIpAddr }}  |  UserAgent: {{ userAgent }} </span>
+  <span class="info"><br>Server IP: {{ serverIpAddr }}  <br>  Local IP: {{ localIpAddr }}  <br>  UserAgent: {{ userAgent }} </span>
   </div>
 </div>
 </template>
@@ -46,13 +49,8 @@ export default {
     let browserUA;
     if (process.server) {
       try {
-        const req = context.req;
-        const headers = (req && req.headers) ? Object.assign({}, req.headers) : {};
-        let xForwardedFor = headers['x-forwarded-for'];
-        let xRealIp = headers['x-real-ip'];
-        let xUserAgent = headers['User-Agent'];
-        localIp = xRealIp || "Not found";
-        browserUA = xUserAgent || "Not found";
+        browserUA = context.userAgent;
+        localIp = context.ip||"Not found";
       }catch (err) {
         console.log ("Could not determine local IP: " + err);
       }

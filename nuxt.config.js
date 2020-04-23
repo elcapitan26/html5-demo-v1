@@ -20,11 +20,14 @@ export default {
       { src: 'js/utils.js' }
   ]
   },
+  router:{
+    // Run the middleware/user-agent.js on every page
+    middleware: 'userinfo'
+  },
   /*
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
-  //env: { serverIp: "hello"},
   /*
   ** Global CSS
   */

@@ -15,4 +15,7 @@ window.onload = function() {
     for (var i = 0; i < anchors.length; i++) {
         anchors[i].onclick = function() {return false;};
     }
-};
+    document.querySelector('.menu-btn').addEventListener
+    ('click', () => document.querySelector('.main-menu')
+    .classList.toggle('show'));
+}; 
